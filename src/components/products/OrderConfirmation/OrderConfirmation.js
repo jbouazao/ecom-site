@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMinus} from '@fortawesome/free-solid-svg-icons';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 
-const orderConfirmation = (props) => {
+const orderConfirmation = () => {
 		// state = {
 		// 	quantity: 1,
 		// 	totalPrice: this.props.product.price,
@@ -19,8 +19,8 @@ const orderConfirmation = (props) => {
 		// 	this.setState({quantity: newQuantity, totalPrice: newPrice})
 		// }
 		
-		const addQuantityHandler = () => {
-			let newQuantity = props
+		const addQuantityHandler = (prodId) => {
+			// create prod if non existant
 		}
 
 		const removeQuantityHandler = () => {
@@ -45,7 +45,7 @@ const orderConfirmation = (props) => {
 
 		return (
 			<div className = {classes.modalContainer}>
-				<img className = {classes.image} src = {props.product.product} alt = ''/>
+				<img className = {classes.image} src = {this.props.product.product} alt = ''/>
 				<div className = {classes.detailsContainer}>
 					<div className = {classes.description}>
 						<ul >
@@ -58,13 +58,13 @@ const orderConfirmation = (props) => {
 						<div className = {classes.minusContainer} onClick = {removeQuantityHandler}>
 							<FontAwesomeIcon icon = {faMinus} />
 						</div>
-						<div className = {classes.quantity}>{props.quantity}</div>
+						<div className = {classes.quantity}>{this.state.quantity}</div>
 						<div className = {classes.plusContainer} onClick = {addQuantityHandler}>
 							<FontAwesomeIcon icon = {faPlus} />
 						</div>
 					</div>
-					<div>price: {props.totalPrice} DH</div>
-					<div className = {classes.addtocart} onClick = { () => addtocartHandler(props.product)}>Add To Cart</div>
+					<div>price: {this.state.totalPrice} DH</div>
+					<div className = {classes.addtocart} onClick = { () => addtocartHandler(this.props.product)}>Add To Cart</div>
 				</div>
 			</div>
 		)
