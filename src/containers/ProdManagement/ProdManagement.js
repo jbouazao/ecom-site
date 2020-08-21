@@ -28,11 +28,15 @@ class ProdManagement extends Component {
 		let newProd = {
 			id: product.id,
 			price: product.price,
+			quantity: 1
 		}
+		return newProd;
 	}
 
 	addtocartHandler = (modalState, curprod) => {
-		this.setState({modalShow: modalState, currentProduct: curprod})
+		this.setState({modalShow: modalState,
+				currentProduct: curprod,
+				cart: })
 	}
 
 	render () {
