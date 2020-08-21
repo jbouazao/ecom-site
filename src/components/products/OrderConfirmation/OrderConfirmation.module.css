@@ -1,0 +1,74 @@
+.modalContainer {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 100%;
+}
+
+.image {
+	/* background: red; */
+	flex: 3;
+}
+
+.detailsContainer {
+	flex: 2;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.description {
+	width: 200px;
+	height: 300px;
+	border: 1px solid black;
+}
+
+.quantContainer {
+	display: flex;
+	flex-direction: row;
+	width: 149px;
+	height: 50px;
+	border: 1px solid black;
+}
+
+.minusContainer {
+	display: flex;
+	flex: 1;
+	background: #5b63ff;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 100%;
+}
+
+.quantity {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.plusContainer {
+	flex: 1;
+	display: flex;
+	background: #5b63ff;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 100%;
+}
+
+.addtocart {
+	width: 200px;
+	height: 70px;
+	border: 1px solid black;
+	font-weight: bold;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 25px;
+	background: #5b63ff;
+}
