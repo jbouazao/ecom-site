@@ -3,6 +3,10 @@ import Products from '../../components/products/products';
 import Cart from '../../components/Cart/Cart';
 import Modal from '../../components/UI/Modal/Modal';
 import Aux from '../../hoc/Aux/Aux'
+import blackbag from '../../assets/blackbag.jpg'
+import brownbag from '../../assets/brownbag.jpg'
+import redbag from '../../assets/redbag.jpg'
+import anotherbag from '../../assets/anotherbag.jpg'
 
 class ProdManagement extends Component {
 	prods = [
@@ -16,27 +20,54 @@ class ProdManagement extends Component {
 		currentProduct: null,
 		cart: {
 			products: [],
-			totalPrice: 0
+			totalCartPrice: 0
 		},
+		quantity: 1,
+		totalPriceItem: 0
 	}
 
-	modalHandler = (modalState) => {
-		this.setState({modalShow: modalState})
+	backdropClicked = (modalState) => {
+		this.setState({modalShow: modalState, quantity: 0, totalCartPrice: 0});
 	}
 
-	createNewProd = (product) => {
-		let newProd = {
-			id: product.id,
-			price: product.price,
-			quantity: 1
+	// createNewProd = (product) => {
+	// 	let newProd = {
+	// 		id: product.id,
+	// 		price: product.price,
+	// 		quantity: 1
+	// 	}
+	// 	return newProd;
+	// }
+
+	addQuantityHandler = (newQuantity, newPrice) => {
+		this.setState({quantity: newQuantity, price: newPrice})
+	}
+
+	removeQuantityHandler = (newQuantity, newPrice) => {
+		this.setState({quantity: newQuantity, price: newPrice})
+	}
+
+	displayDetailsHandler = (modalState, curprod) => {
+		this.setState({modalShow: modalState, currentProduct: curprod})
+	}
+
+	addtocartHandler = (curprod, quantity) => {
+		curprod.quantity = quantity;
+		if (this.state.modalShow === true) {
+			let modalState = this.state.modalShow;
+			modalState = !modalState;
+			this.setState({modalShow: modalState,
+					currentProduct: curprod})
 		}
-		return newProd;
-	}
-
-	addtocartHandler = (modalState, curprod) => {
-		this.setState({modalShow: modalState,
-				currentProduct: curprod,
-				cart: })
+		this.setState(prevState => ({
+			cart: {
+				...prevState.cart,
+				products: [...prevState.cart.products, curprod],
+				totalPriceItem: (curprod.price * quantity)
+			},
+			quantity: 0,
+			totalPriceItem: 0
+			}))
 	}
 
 	render () {
@@ -47,8 +78,11 @@ class ProdManagement extends Component {
 				<Products
 					modal = {modshow}
 					curprod = {currentprod}
-					modalHandler = { this.modalHandler }
+					backdropClicked = { this.backdropClicked }
 					addtocart = { this.addtocartHandler }
+					displayDetailsHandler = { this.displayDetailsHandler }
+					addQuantityHandler = { this.addQuantityHandler }
+					removeQuantityHandler = { this.removeQuantityHandler }
 				/>
 				{/* <Modal><Cart /></Modal> */}
 			</Aux>

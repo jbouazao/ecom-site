@@ -4,51 +4,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMinus} from '@fortawesome/free-solid-svg-icons';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 
-const orderConfirmation = () => {
-		// state = {
-		// 	quantity: 1,
-		// 	totalPrice: this.props.product.price,
-		// 	cart: null
-		// }
+const orderConfirmation = (props) => {
+		let quantity = props.product.quantity;
+		let price = props.product.price
 
-		// const addQuantityHandler = () => {
-		// 	let newQuantity = this.state.quantity;
-		// 	let newPrice = this.state.totalPrice;
-		// 	newQuantity += 1;
-		// 	newPrice += this.props.product.price;
-		// 	this.setState({quantity: newQuantity, totalPrice: newPrice})
-		// }
-		
-		const addQuantityHandler = (prodId) => {
-			// create prod if non existant
+		const addQuantityHandler = () => {
+			let newQuantity = quantity + 1;
+			console.log(newQuantity);
+			let newPrice = price + props.product.price;
+			props.addQuantityHandler(newQuantity, newPrice)
 		}
 
 		const removeQuantityHandler = () => {
-			let newQuantity = this.state.quantity;
-			let newPrice = this.state.totalPrice;
-			if (this.state.quantity > 1) {
-				newQuantity -= 1;
-				newPrice -= this.props.product.price;
-				this.setState({quantity: newQuantity, totalPrice: newPrice})
+			if (quantity > 1) {
+				let newQuantity = quantity - 1;
+				let newPrice = price - props.product.price;
+				props.removeQuantityHandler(newQuantity, newPrice)
 			}
 		}
 
-		const addtocartHandler = (product) => {
-			let fillCart = this.state.cart;
-			fillCart = {
-				id: product.id,
-				totalPrice: this.state.totalPrice,
-				quantity: this.state.quantity
-			}
-			this.setState({cart: fillCart}, () => {console.log(this.state.cart)})
+		// const addtocartHandler = (product) => {
+		// 	let fillCart = this.state.cart;
+		// 	fillCart = {
+		// 		id: product.id,
+		// 		totalPrice: this.state.totalPrice,
+		// 		quantity: this.state.quantity
+		// 	}
+		// 	this.setState({cart: fillCart}, () => {console.log(this.state.cart)})
+		// }
+
+		const addtocartHandler = (product, quantity) => {
+			props.addtocartHandler(product, quantity)
 		}
 
 		return (
 			<div className = {classes.modalContainer}>
-				<img className = {classes.image} src = {this.props.product.product} alt = ''/>
+				<img className = {classes.image} src = {props.product.product} alt = ''/>
 				<div className = {classes.detailsContainer}>
 					<div className = {classes.description}>
-						<ul >
+						<ul>
 							<li style = {{marginLeft: '30px',}}>product detail 1</li>
 							<li style = {{marginLeft: '30px',}}>product detail 2</li>
 							<li style = {{marginLeft: '30px',}}>product detail 3</li>
@@ -58,13 +52,13 @@ const orderConfirmation = () => {
 						<div className = {classes.minusContainer} onClick = {removeQuantityHandler}>
 							<FontAwesomeIcon icon = {faMinus} />
 						</div>
-						<div className = {classes.quantity}>{this.state.quantity}</div>
+						<div className = {classes.quantity}>{quantity}</div>
 						<div className = {classes.plusContainer} onClick = {addQuantityHandler}>
 							<FontAwesomeIcon icon = {faPlus} />
 						</div>
 					</div>
-					<div>price: {this.state.totalPrice} DH</div>
-					<div className = {classes.addtocart} onClick = { () => addtocartHandler(this.props.product)}>Add To Cart</div>
+					<div>price: {price} DH</div>
+					<div className = {classes.addtocart} onClick = { () => addtocartHandler(props.product, quantity)}>Add To Cart</div>
 				</div>
 			</div>
 		)

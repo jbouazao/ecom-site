@@ -19,21 +19,18 @@ const Products = (props) => {
 		let modalShow = props.modal;
 		let curprod = props.curprod;
 
-		const backdropHandler = () => {
+		const backdropClicked = () => {
 			let tempModal = modalShow;
 			if (tempModal === true) {
 				tempModal = !tempModal;
-				// this.setState({modalShow: tempModal})
-				props.modalHandler(tempModal);
-			}}
+				props.backdropClicked(tempModal);
+		}}
 
-		const addtocartHandler = (currentProd) => {
+		const displayDetailsHandler = (curprod) => {
 			if (modalShow === false) {
 				let tempModal = modalShow;
 				tempModal = !tempModal;
-				console.log(tempModal)
-				// this.setState({modalShow: tempModal, currentProduct: currentProd})
-				props.addtocart(tempModal, currentProd)
+				props.displayDetailsHandler(tempModal, curprod)
 			}
 		}
 
@@ -44,11 +41,15 @@ const Products = (props) => {
 						return <Product
 										img = {i.product}
 										price = {i.price}
-										addtocart = {() => addtocartHandler(i)}/>
+										addtocart = {() => displayDetailsHandler(i)}/>
 					})
 				}
-				{ modalShow ? <Modal backdropClicked = {backdropHandler}>
-					<OrderConfirmation product = {curprod}/>
+				{ modalShow ? <Modal backdropClicked = {backdropClicked}>
+					<OrderConfirmation product = {curprod}
+						addQuantityHandler = { props.addQuantityHandler }
+						removeQuantityHandler = { props.removeQuantityHandler }
+						addtocartHandler = { props.addtocart }
+						/>
 					</Modal> :
 					null }
 			</div>
