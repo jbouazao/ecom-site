@@ -9,18 +9,11 @@ const orderConfirmation = (props) => {
 		let price = props.product.price
 
 		const addQuantityHandler = () => {
-			let newQuantity = quantity + 1;
-			console.log(newQuantity);
-			let newPrice = price + props.product.price;
-			props.addQuantityHandler(newQuantity, newPrice)
+			props.addQuantityHandler()
 		}
 
 		const removeQuantityHandler = () => {
-			if (quantity > 1) {
-				let newQuantity = quantity - 1;
-				let newPrice = price - props.product.price;
-				props.removeQuantityHandler(newQuantity, newPrice)
-			}
+			props.removeQuantityHandler()
 		}
 
 		// const addtocartHandler = (product) => {
@@ -49,16 +42,16 @@ const orderConfirmation = (props) => {
 						</ul>
 					</div>
 					<div className = {classes.quantContainer}>
-						<div className = {classes.minusContainer} onClick = {removeQuantityHandler}>
+						<div className = {classes.minusContainer} onClick = {() => removeQuantityHandler(quantity, price)}>
 							<FontAwesomeIcon icon = {faMinus} />
 						</div>
-						<div className = {classes.quantity}>{quantity}</div>
-						<div className = {classes.plusContainer} onClick = {addQuantityHandler}>
+						<div className = {classes.quantity}>{props.quantity}</div>
+						<div className = {classes.plusContainer} onClick = {() => addQuantityHandler(quantity, price)}>
 							<FontAwesomeIcon icon = {faPlus} />
 						</div>
 					</div>
-					<div>price: {price} DH</div>
-					<div className = {classes.addtocart} onClick = { () => addtocartHandler(props.product, quantity)}>Add To Cart</div>
+					<div>price: {props.totalPriceItem} DH</div>
+					<div className = {classes.addtocart} onClick = { () => addtocartHandler(props.product, props.quantity)}>Add To Cart</div>
 				</div>
 			</div>
 		)

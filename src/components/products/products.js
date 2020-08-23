@@ -49,6 +49,8 @@ const Products = (props) => {
 						addQuantityHandler = { props.addQuantityHandler }
 						removeQuantityHandler = { props.removeQuantityHandler }
 						addtocartHandler = { props.addtocart }
+						quantity = { props.quantity }
+						totalPriceItem = { props.totalPriceItem }
 						/>
 					</Modal> :
 					null }

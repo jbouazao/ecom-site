@@ -30,25 +30,23 @@ class ProdManagement extends Component {
 		this.setState({modalShow: modalState, quantity: 0, totalCartPrice: 0});
 	}
 
-	// createNewProd = (product) => {
-	// 	let newProd = {
-	// 		id: product.id,
-	// 		price: product.price,
-	// 		quantity: 1
-	// 	}
-	// 	return newProd;
-	// }
+	addQuantityHandler = () => {
+		let newQuantity = this.state.quantity + 1;
+		let newPrice = this.state.totalPriceItem + this.state.currentProduct.price;
 
-	addQuantityHandler = (newQuantity, newPrice) => {
-		this.setState({quantity: newQuantity, price: newPrice})
+		this.setState({quantity: newQuantity, totalPriceItem: newPrice})
 	}
 
-	removeQuantityHandler = (newQuantity, newPrice) => {
-		this.setState({quantity: newQuantity, price: newPrice})
+	removeQuantityHandler = () => {
+		if (this.state.quantity > 1) {
+			let newQuantity = this.state.quantity - 1;
+			let newPrice = this.state.totalPriceItem - this.state.currentProduct.price;
+			this.setState({quantity: newQuantity, totalPriceItem: newPrice})
+		}
 	}
 
 	displayDetailsHandler = (modalState, curprod) => {
-		this.setState({modalShow: modalState, currentProduct: curprod})
+		this.setState({modalShow: modalState, currentProduct: curprod, totalPriceItem: curprod.price})
 	}
 
 	addtocartHandler = (curprod, quantity) => {
@@ -59,15 +57,19 @@ class ProdManagement extends Component {
 			this.setState({modalShow: modalState,
 					currentProduct: curprod})
 		}
-		this.setState(prevState => ({
-			cart: {
-				...prevState.cart,
-				products: [...prevState.cart.products, curprod],
-				totalPriceItem: (curprod.price * quantity)
-			},
-			quantity: 0,
-			totalPriceItem: 0
-			}))
+		// this.setState(prevState => ({
+		// 	cart: {
+		// 		...prevState.cart,
+		// 		products: [...prevState.cart.products, curprod],
+		// 		totalPriceItem: (curprod.price * quantity)
+		// 	},
+		// 	quantity: 1,
+		// 	totalPriceItem: 0
+		// 	}))
+		let updatedProducts = [...this.state.cart.products, curprod]
+		let updatedCart = {...this.state.cart, products: updatedProducts, totalCartPrice: this.state.cart.totalCartPrice + (curprod.price * this.state.quantity)};
+		// console.log('what\'s up', curprod.price, this.state.quantity, this.state.)
+		this.setState({cart: updatedCart, quantity: 1, totalPriceItem: curprod.price})
 	}
 
 	render () {
@@ -78,6 +80,8 @@ class ProdManagement extends Component {
 				<Products
 					modal = {modshow}
 					curprod = {currentprod}
+					quantity = { this.state.quantity }
+					totalPriceItem = { this.state.totalPriceItem }
 					backdropClicked = { this.backdropClicked }
 					addtocart = { this.addtocartHandler }
 					displayDetailsHandler = { this.displayDetailsHandler }
