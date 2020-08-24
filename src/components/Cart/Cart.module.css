@@ -6,7 +6,7 @@
 	align-items: center;
 }
 
-.temp {
+.product {
 	width: 95%;
 	height: 150px;
 	border: 1px solid black;
@@ -20,11 +20,45 @@
 	flex-direction: column;
 	height: 100%;
 	width: 100%;
-	/* background: red; */
 	border: 1px solid black;
 }
 
 .prodDesc {
 	padding-left: 10px;
 	font-size: 15px;
+}
+
+.quantContainer {
+	display: flex;
+	flex-direction: row;
+	width: 149px;
+	height: 50px;
+	border: 1px solid black;
+}
+
+.minusContainer {
+	display: flex;
+	flex: 1;
+	background: #5b63ff;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 100%;
+}
+
+.quantity {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.plusContainer {
+	flex: 1;
+	display: flex;
+	background: #5b63ff;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 100%;
 }

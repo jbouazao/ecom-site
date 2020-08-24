@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Products from '../../components/products/products';
-import Cart from '../../components/Cart/Cart';
+import CartContainer from '../../components/Cart/CartContainer';
 import Modal from '../../components/UI/Modal/Modal';
 import Aux from '../../hoc/Aux/Aux'
 import blackbag from '../../assets/blackbag.jpg'
@@ -16,7 +16,7 @@ class ProdManagement extends Component {
 		{id: 4, product: anotherbag, price: 120},
 ]
 	state = {
-		modalShow: false,
+		displayDetailsModal: false,
 		currentProduct: null,
 		cart: {
 			products: [],
@@ -27,7 +27,11 @@ class ProdManagement extends Component {
 	}
 
 	backdropClicked = (modalState) => {
-		this.setState({modalShow: modalState, quantity: 1, totalCartPrice: 0});
+		this.setState({displayDetailsModal: modalState, quantity: 1, totalCartPrice: 0});
+	}
+
+	cartBackdropClicked = () => {
+		this.props.backdropClicked()
 	}
 
 	addQuantityHandler = () => {
@@ -45,40 +49,55 @@ class ProdManagement extends Component {
 		}
 	}
 
+	addQuantityCartHandler = (id) => {
+		// let updatedCart = this.state.cart
+		// let updatedproducts = this.state.cart.products
+		// updatedproducts = [...updatedproducts, updatedproducts[id]]
+		// updatedCart = {...updatedCart, products}
+		console.log(this.state.cart)
+	}
+
+	removeQuantityCartHandler = (id) => {
+		console.log(id)
+	}
+
 	displayDetailsHandler = (modalState, curprod) => {
-		this.setState({modalShow: modalState, currentProduct: curprod, totalPriceItem: curprod.price})
+		this.setState({displayDetailsModal: modalState, currentProduct: curprod, totalPriceItem: curprod.price})
+	}
+
+	openCartHandler = () => {
+		if (this.state.displayCartModal === false) {
+			let updateModal = this.state.displayCartModal;
+			updateModal = !updateModal;
+			this.setState({displayCartModal: updateModal})
+		}
 	}
 
 	addtocartHandler = (curprod, quantity) => {
 		curprod.quantity = quantity;
-		if (this.state.modalShow === true) {
-			let modalState = this.state.modalShow;
+		if (this.state.displayDetailsModal === true) {
+			let modalState = this.state.displayDetailsModal;
 			modalState = !modalState;
-			this.setState({modalShow: modalState,
+			this.setState({displayDetailsModal: modalState,
 					currentProduct: curprod})
 		}
-		// this.setState(prevState => ({
-		// 	cart: {
-		// 		...prevState.cart,
-		// 		products: [...prevState.cart.products, curprod],
-		// 		totalPriceItem: (curprod.price * quantity)
-		// 	},
-		// 	quantity: 1,
-		// 	totalPriceItem: 0
-		// 	}))
-		let updatedProducts = [...this.state.cart.products, curprod]
+		let updatedProducts
+		if (!this.state.cart.products.length)
+			updatedProducts = Array(this.prods.length)
+		// console.log(updatedProducts.length)
+		updatedProducts = [...this.state.cart.products]
+		updatedProducts[curprod.id] = curprod
 		let updatedCart = {...this.state.cart, products: updatedProducts, totalCartPrice: this.state.cart.totalCartPrice + (curprod.price * this.state.quantity)};
-		// console.log('what\'s up', curprod.price, this.state.quantity, this.state.)
 		this.setState({cart: updatedCart, quantity: 1, totalPriceItem: curprod.price})
 	}
 
 	render () {
-		const modshow = this.state.modalShow;
+		const modshow = this.state.displayDetailsModal;
 		const currentprod = this.state.currentProduct;
 		return (
 			<Aux>
 				<Products
-					modal = {modshow}
+					displayDetailsModal = {modshow}
 					curprod = {currentprod}
 					quantity = { this.state.quantity }
 					totalPriceItem = { this.state.totalPriceItem }
@@ -88,7 +107,16 @@ class ProdManagement extends Component {
 					addQuantityHandler = { this.addQuantityHandler }
 					removeQuantityHandler = { this.removeQuantityHandler }
 				/>
-				{/* <Modal><Cart /></Modal> */}
+				{
+					this.props.modal ?
+					<Modal backdropClicked = { this.cartBackdropClicked }>
+						<CartContainer
+							cart = { this.state.cart }
+							addQuantityCartHandler = { this.addQuantityCartHandler }
+							removeQuantityCartHandler = { this.removeQuantityCartHandler }
+							/>
+					</Modal> : null
+				}
 			</Aux>
 		)
 	}

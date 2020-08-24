@@ -7,6 +7,9 @@ import {faUserCircle} from '@fortawesome/free-solid-svg-icons'
 import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 
 const Header = (props) => {
+	const openCartHandler = () => {
+		props.openCartHandler()
+	}
 	return (
 		<div className = {classes.headerContainer}>
 			<div className = {classes.logo}>
@@ -32,7 +35,7 @@ const Header = (props) => {
 					<p className = {classes.nav1text}>Sign in</p>
 				</div>
 				<div className = {classes.navIconsContainer}>
-					<FontAwesomeIcon icon = {faShoppingCart} className = {classes.navIcons}/>
+					<FontAwesomeIcon icon = {faShoppingCart} className = {classes.navIcons} onClick = { openCartHandler }/>
 					<p className = {classes.nav1text}>Cart</p>
 				</div>
 			</nav>

@@ -16,7 +16,7 @@ const prods = [
 ]
 
 const Products = (props) => {
-		let modalShow = props.modal;
+		let modalShow = props.displayDetailsModal;
 		let curprod = props.curprod;
 
 		const backdropClicked = () => {
