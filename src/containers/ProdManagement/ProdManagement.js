@@ -27,7 +27,7 @@ class ProdManagement extends Component {
 	}
 
 	backdropClicked = (modalState) => {
-		this.setState({modalShow: modalState, quantity: 0, totalCartPrice: 0});
+		this.setState({modalShow: modalState, quantity: 1, totalCartPrice: 0});
 	}
 
 	addQuantityHandler = () => {
