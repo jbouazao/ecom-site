@@ -31,6 +31,7 @@ const cart = (props) => {
 							</div>
 						</div>
 						<p className = {classes.totalItemPrice}>{props.totalItemPrice}.00 DH</p>
+						{/* {console.log(props.totalItemPrice)} */}
 					</div>
 				</div>
 		)

@@ -14,7 +14,7 @@ class ProdManagement extends Component {
 		{id: 2, product: brownbag, price: 100},
 		{id: 3, product: redbag, price: 110},
 		{id: 4, product: anotherbag, price: 120},
-]
+	]
 	state = {
 		displayDetailsModal: false,
 		currentProduct: null,
@@ -50,15 +50,31 @@ class ProdManagement extends Component {
 	}
 
 	addQuantityCartHandler = (id) => {
-		// let updatedCart = this.state.cart
-		// let updatedproducts = this.state.cart.products
-		// updatedproducts = [...updatedproducts, updatedproducts[id]]
-		// updatedCart = {...updatedCart, products}
-		console.log(this.state.cart)
+		let updatedCart = this.state.cart
+		let updatedProducts = this.state.cart.products
+		let totalCartPrice = this.state.cart.totalCartPrice;
+		for (let i = 0; i < updatedProducts.length; i++) {
+			if (updatedProducts[i].id === id) {
+				updatedProducts[i].quantity = updatedProducts[i].quantity + 1
+				totalCartPrice += updatedProducts[i].price;
+			}
+		}
+		updatedCart = {...updatedCart, products: updatedProducts, totalCartPrice: totalCartPrice}
+		this.setState({cart: updatedCart})
 	}
 
 	removeQuantityCartHandler = (id) => {
-		console.log(id)
+		let updatedCart = this.state.cart
+		let updatedProducts = this.state.cart.products
+		let totalCartPrice = this.state.cart.totalCartPrice;
+		for (let i = 0; i < updatedProducts.length; i++) {
+			if (updatedProducts[i].id === id && updatedProducts[i].quantity > 1) {
+				updatedProducts[i].quantity = updatedProducts[i].quantity - 1
+				totalCartPrice -= updatedProducts[i].price;
+			}
+		}
+		updatedCart = {...updatedCart, products: updatedProducts, totalCartPrice: totalCartPrice}
+		this.setState({cart: updatedCart})
 	}
 
 	displayDetailsHandler = (modalState, curprod) => {
@@ -81,12 +97,16 @@ class ProdManagement extends Component {
 			this.setState({displayDetailsModal: modalState,
 					currentProduct: curprod})
 		}
-		let updatedProducts
-		if (!this.state.cart.products.length)
-			updatedProducts = Array(this.prods.length)
-		// console.log(updatedProducts.length)
-		updatedProducts = [...this.state.cart.products]
-		updatedProducts[curprod.id] = curprod
+		let updatedProducts = [...this.state.cart.products]
+		// console.log(updatedProducts);
+		for (let i = 0; i < updatedProducts.length; i++) {
+			if (updatedProducts[i].id === curprod.id)
+				updatedProducts[i].quantity += quantity
+			else if (i + 1 === updatedProducts.length)
+				updatedProducts = [...updatedProducts, curprod]
+		}
+		if (updatedProducts.length === 0)
+			updatedProducts = [...updatedProducts, curprod]
 		let updatedCart = {...this.state.cart, products: updatedProducts, totalCartPrice: this.state.cart.totalCartPrice + (curprod.price * this.state.quantity)};
 		this.setState({cart: updatedCart, quantity: 1, totalPriceItem: curprod.price})
 	}
