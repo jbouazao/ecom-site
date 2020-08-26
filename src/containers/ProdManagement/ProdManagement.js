@@ -98,18 +98,29 @@ class ProdManagement extends Component {
 					currentProduct: curprod})
 		}
 		let updatedProducts = [...this.state.cart.products]
-		// console.log(updatedProducts);
+		console.log('1', updatedProducts)
 		for (let i = 0; i < updatedProducts.length; i++) {
-			if (updatedProducts[i].id === curprod.id)
-				updatedProducts[i].quantity = quantity
-			else if (i + 1 === updatedProducts.length)
+			console.log('2', updatedProducts)
+			if (updatedProducts[i].id === curprod.id) {
+				updatedProducts[i].quantity += quantity
+				console.log('test')
+				// console.log('i', i, curprod, updatedProducts[i])
+				break ;
+			}
+			else if (i + 1 === updatedProducts.length) {
 				updatedProducts = [...updatedProducts, curprod]
+				break ;
+			}
 		}
 		if (updatedProducts.length === 0)
 			updatedProducts = [...updatedProducts, curprod]
 		let updatedCart = {...this.state.cart, products: updatedProducts, totalCartPrice: this.state.cart.totalCartPrice + (curprod.price * this.state.quantity)};
 		this.setState({cart: updatedCart, quantity: 1, totalPriceItem: curprod.price})
 	}
+
+	// componentDidUpdate() {
+	// 	console.log(this.state.cart.products)
+	// }
 
 	render () {
 		const modshow = this.state.displayDetailsModal;
