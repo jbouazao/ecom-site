@@ -101,7 +101,7 @@ class ProdManagement extends Component {
 		// console.log(updatedProducts);
 		for (let i = 0; i < updatedProducts.length; i++) {
 			if (updatedProducts[i].id === curprod.id)
-				updatedProducts[i].quantity += quantity
+				updatedProducts[i].quantity = quantity
 			else if (i + 1 === updatedProducts.length)
 				updatedProducts = [...updatedProducts, curprod]
 		}

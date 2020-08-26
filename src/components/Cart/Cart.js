@@ -25,13 +25,12 @@ const cart = (props) => {
 							<div className = {classes.minusContainer} onClick = {props.removeQuantityCartHandler}>
 								<FontAwesomeIcon icon = {faMinus} />
 							</div>
-							<div className = {classes.quantity}>need to fill this</div>
+							<div className = {classes.quantity}>{props.quantity}</div>
 							<div className = {classes.plusContainer} onClick = {props.addQuantityCartHandler}>
 								<FontAwesomeIcon icon = {faPlus} />
 							</div>
 						</div>
 						<p className = {classes.totalItemPrice}>{props.totalItemPrice}.00 DH</p>
-						{/* {console.log(props.totalItemPrice)} */}
 					</div>
 				</div>
 		)
