@@ -12,6 +12,7 @@ class CartContainer extends Component {
 				{this.cartItems.map(item => {
 					return <Cart id = {item.id}
 						totalItemPrice = { item.price * item.quantity }
+						quantity = {item.quantity}
 						addQuantityCartHandler = { () => this.props.addQuantityCartHandler(item.id) }
 						removeQuantityCartHandler = { () => this.props.removeQuantityCartHandler(item.id) }
 						/>
